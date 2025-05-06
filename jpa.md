@@ -55,7 +55,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ## Actividades
 
-### Save Parent without ID using repository.save(), entityManager.persist(), entityManager.merge()
+### [3] Save Parent without ID using repository.save(), entityManager.persist(), entityManager.merge()
 
 - `persist()`: Inserta correctamente.
 - `merge()`: Inserta una copia *managed*.
@@ -64,7 +64,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Save Parent with an initialized ID using repository.save(), entityManager.persist(), entityManager.merge()
+### [4] Save Parent with an initialized ID using repository.save(), entityManager.persist(), entityManager.merge()
 
 - `persist()`: Lanza excepción.
 - `merge()`: Inserta o actualiza.
@@ -73,7 +73,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Insert Parent with some ID to the database. Save another Parent with the same ID using repository.save(), entityManager.persist(), entityManager.merge()
+### [5] Insert Parent with some ID to the database. Save another Parent with the same ID using repository.save(), entityManager.persist(), entityManager.merge()
 
 - `persist()`: Excepción por duplicado.
 - `merge()`: Puede sobrescribir sin error.
@@ -82,7 +82,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Save Parent with Children, which are not present in the database - using the same 3 approaches
+### [6] Save Parent with Children, which are not present in the database - using the same 3 approaches
 
 - `persist()`: Funciona si hay `cascade = PERSIST`.
 - `merge()`: Inserta pero puede duplicar si no se gestionan bien los hijos.
@@ -91,7 +91,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Save Parent with Children, which are already present in the database - using the same 3 approaches
+### [7] Save Parent with Children, which are already present in the database - using the same 3 approaches
 
 - `persist()`: Falla si los hijos tienen ID.
 - `merge()`: Puede duplicar si hijos están detached.
@@ -100,14 +100,14 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Save Child without Parent - using the same 3 approaches
+### [8] Save Child without Parent - using the same 3 approaches
 
 - Todos los métodos fallan si la relación es obligatoria (violación de FK).
 - **Aprendizaje**: el `Parent` debe existir o estar marcado como opcional.
 
 ---
 
-### Save Child with Parent initialized, but not present in the database - using the same 3 approaches
+###  [9] Save Child with Parent initialized, but not present in the database - using the same 3 approaches
 
 - `persist()`: Funciona si hay `cascade = PERSIST` desde Child hacia Parent.
 - `merge()`: Inserta ambos.
@@ -116,7 +116,7 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Save Child with Parent initialized, present in the database, but detached from EntityManager/Session - using the same 3 approaches
+### [10] Save Child with Parent initialized, present in the database, but detached from EntityManager/Session - using the same 3 approaches
 
 - `persist()`: No funciona (Parent está fuera del contexto).
 - `merge()`: Reconecta el Parent y guarda el Child.
@@ -125,14 +125,14 @@ Actúa como un “contexto de persistencia” que vigila los objetos y sus cambi
 
 ---
 
-### Fetch the Parent with JpaRepository, try changing it and don’t save it explicitly. Flush the session and check whether the changes were propagated to the database
+### [11] Fetch the Parent with JpaRepository, try changing it and don’t save it explicitly. Flush the session and check whether the changes were propagated to the database
 
 - Cambios sí se reflejan al hacer flush.
 - **Aprendizaje**: las entidades *managed* se sincronizan automáticamente.
 
 ---
 
-### Start the transaction, fetch the Parent with JpaRepository, try changing it and don’t save it explicitly. Flush the session and check whether the changes were propagated to the database
+### [12] Start the transaction, fetch the Parent with JpaRepository, try changing it and don’t save it explicitly. Flush the session and check whether the changes were propagated to the database
 
 - Cambios también se reflejan sin necesidad de `save()`.
 - **Aprendizaje**: dentro de una transacción, los cambios se guardan si la entidad está *managed*.
